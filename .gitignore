@@ -69,11 +69,13 @@ octave-workspace
 *._ia
 *.__i
 *._ii
+*.scvd
 
 # Generated output files
 /Listings/*
 /Objects/*
-
+DebugConfig
+RTE
 # Debugger files
 # define exception below if needed
 *.ini
