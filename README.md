@@ -3,7 +3,7 @@
 **Si vous ouvrez ce fichier README.md avec `Visual Code Studio`, faites CTRL+K,V pour visualiser le contenu.**
 
 Dépôt commun pour le BE chti :
-Chaque binome travaille sur ça branche de type grpE_NOM1_NOM2.
+Chaque binome travaille sur ça branche de type grpC_SEBAICI_ZENOU-TRUCHOT.
 
 ## Guide de travail Git
 ---
