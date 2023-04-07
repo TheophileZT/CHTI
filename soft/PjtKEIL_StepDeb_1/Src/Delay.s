@@ -12,7 +12,7 @@
 		
 VarTime	dcd 0
 
-	
+	EXPORT VarTime
 ; ===============================================================================================
 	
 ;constantes (équivalent du #define en C)

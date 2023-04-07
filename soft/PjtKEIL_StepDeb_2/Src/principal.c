@@ -1,11 +1,9 @@
 
 
 #include "DriverJeuLaser.h"
+extern void timer_callback(void);
 
-void timer_callback(void);
-
-int main(void)
-{
+int main(void){
 
 // ===========================================================================
 // ============= INIT PERIPH (faites qu'une seule fois)  =====================
@@ -18,6 +16,7 @@ CLOCK_Configure();
 	
 //** Placez votre code là ** // 
 	
+Timer_1234_Init_ff(TIM4, 7200000);
 	
 	
 // Activation des interruptions issues du Timer 4
@@ -25,6 +24,7 @@ CLOCK_Configure();
 // cette fonction (si écrite en ASM) doit être conforme à l'AAPCS
 	
 //** Placez votre code là ** // 	
+Active_IT_Debordement_Timer(TIM4, 2, timer_callback);
 	
 	
 	
@@ -42,7 +42,7 @@ while	(1)
 	}
 }
 
-char FlagCligno;
+/*char FlagCligno;
 
 void timer_callback(void)
 {
@@ -57,5 +57,5 @@ void timer_callback(void)
 		GPIOB_Clear(1);
 	}
 		
-}
+}*/
 
