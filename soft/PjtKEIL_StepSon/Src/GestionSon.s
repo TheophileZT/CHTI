@@ -1,7 +1,9 @@
 	PRESERVE8
 	THUMB   
 		
+	include	Driver/DriverJeuLaser.inc
 	export callback_son;
+	export sortieSon;
 	extern Son;	
 ; ====================== zone de réservation de données,  ======================================
 ;Section RAM (read only) :
@@ -36,5 +38,14 @@ callback_son
 	mul r3, r3, r0;
 	lsr r3, #16;
 	str r3, [r1];
+	mov r0,r3;
+	bl PWM_Set_Value_TIM3_Ch3;
 	pop{pc,r4};
 	END	
+		
+StartSon
+	push{lr};
+	
+	
+	pop{pc};
+	END
