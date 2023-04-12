@@ -3,8 +3,9 @@
 		
 	include	Driver/DriverJeuLaser.inc
 	export callback_son;
+	export start_son;
 	export sortieSon;
-	extern Son;	
+	extern Son;
 ; ====================== zone de réservation de données,  ======================================
 ;Section RAM (read only) :
 	area    mesdata,data,readonly
@@ -25,9 +26,12 @@ index dcd 0
 ; écrire le code ici		
 
 callback_son
-	push{lr,r4};
+	push{lr,r4,r5};
 	ldr r0, =index;
 	ldr r4, [r0];
+	mov r5, #5512;
+	cmp r4,r5;
+	bgt fin;
 	ldr r1, =sortieSon;
 	ldr r2, =Son;
 	ldrsh r3, [r2, r4,lsl #1];
@@ -40,12 +44,13 @@ callback_son
 	str r3, [r1];
 	mov r0,r3;
 	bl PWM_Set_Value_TIM3_Ch3;
-	pop{pc,r4};
-	END	
+fin
+	pop{pc,r4,r5};
 		
-StartSon
+start_son
 	push{lr};
-	
-	
+	ldr r0, =index;
+	mov r1, #0;
+	str r1, [r0];
 	pop{pc};
 	END

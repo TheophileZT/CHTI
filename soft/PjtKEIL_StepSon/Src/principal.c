@@ -1,7 +1,8 @@
 
 #include "DriverJeuLaser.h"
-extern void callback_son(void); 
-
+extern void callback_son(void);
+extern void start_son(void); 
+int button = 0;
 int main(void)
 {
 
@@ -20,7 +21,11 @@ GPIO_Configure(GPIOB, 0, OUTPUT, ALT_PPULL);
 	
 while	(1)
 	{
-
+	 if (button == 1){
+		 start_son();
+		 button = 0;
+	 }
 	}
+	
 }
 
