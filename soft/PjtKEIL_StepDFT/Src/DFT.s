@@ -1,7 +1,9 @@
 	PRESERVE8
 	THUMB   
+	
+	export DFT_ModuleAuCarre
+	extern LeSignal
 		
-
 ; ====================== zone de réservation de données,  ======================================
 ;Section RAM (read only) :
 	area    mesdata,data,readonly
@@ -21,9 +23,43 @@
 	area    moncode,code,readonly
 ; écrire le code ici		
 
+DFT_ModuleAuCarre
+	push {lr,r0}
+	ldr r2, =TabCos
+	bl DFT_X ; calcul cos
+	mov r3,r0 ; met le res dans r3
+	pop{r0}
+	ldr r2, =TabSin
+	push{r3}
+	bl DFT_X ; calcul sin
+	pop{r3}
+	asr r3,#16; décalage signé pour éviter le débordement du registre
+	asr r0,#16; décalage signé pour éviter le débordement du registre
+	mul r3,r3; cos carré dans r3 nouveau format 22.10	
+	mul r0,r0; sin carré dans r0 nouveau format 22.10
+	add r0,r3; somme des carrés dans le registre de retour format 22.10
+	pop{pc}
 
 
-
+DFT_X
+	push {lr, r4, r5, r6}
+	mov r4, #0
+	mov r5, #0
+boucle
+	cmp r4, #64
+	beq fin
+	ldrsh r3, [r0, r4, lsl#1]; R3 (signal) -> format 4.12
+	mul r6, r1, r4
+	and r6, #0x3f
+	ldrsh r6, [r2, r6, lsl#1]; R6 (tabCos)-> format 1.15
+	mul r6, r3; r6 format ->5.27
+	asr r6, #6
+	add	r5, r6; r5 (Somme) doit etre au format 5+6(à cause du asr).27-6 = 11.21
+	add r4, #1
+	b boucle
+fin
+	mov r0, r5
+	pop {pc, r4, r5, r6}
 
 ;Section ROM code (read only) :		
 	AREA Trigo, DATA, READONLY
